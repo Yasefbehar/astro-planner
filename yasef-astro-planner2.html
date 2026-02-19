@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasef Astro Planner PRO</title>
+
+<style>
+body {
+    margin:0;
+    font-family: Arial;
+    background:black;
+    color:white;
+    overflow-x:hidden;
+}
+
+body::before {
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:300%;
+    height:300%;
+    background:
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(1px 1px at 200px 150px, #bbb, transparent),
+        radial-gradient(2px 2px at 400px 80px, #aaa, transparent),
+        radial-gradient(1px 1px at 600px 200px, #888, transparent),
+        radial-gradient(2px 2px at 800px 120px, #ccc, transparent);
+    background-repeat: repeat;
+    background-size: 1000px 600px;
+    animation: moveStars 160s linear infinite;
+    z-index:-1;
+}
+
+@keyframes moveStars {
+    from { transform: translate(0,0); }
+    to { transform: translate(-700px,-700px); }
+}
+
+.header {
+    padding:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.card {
+    background:#0d1b2acc;
+    margin:15px;
+    padding:15px;
+    border-radius:18px;
+}
+
+.green { color:#00ff99; }
+.orange { color:#ffaa00; }
+.red { color:#ff4444; }
+
+.section-title {
+    color:#00bfff;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+🌌 Yasef Astro Planner PRO – Oceanside, NY
+</div>
+
+<div class="card">
+<h3>Tonight Conditions</h3>
+Temperature: <span id="temp">Loading...</span> °F<br>
+Wind: <span id="wind">Loading...</span> mph<br>
+Moon Illumination: <span id="moonillum">Loading...</span>%<br>
+Sunset: <span id="sunset">Loading...</span><br>
+Light Pollution: Bortle 8<br>
+Estimated SQM: 18.5
+</div>
+
+<div class="card">
+<h3>Deep Sky Score</h3>
+<div id="score">-- / 100</div>
+<div id="rating"></div>
+</div>
+
+<div class="card">
+<h3>🎯 Targets After 6:30 PM</h3>
+<div id="targets">Calculating...</div>
+</div>
+
+<script>
+
+const lat = 40.6387;
+const lon = -73.6407;
+
+async function loadData() {
+
+    const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=sunset&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto`
+    );
+
+    const data = await response.json();
+
+    document.getElementById("temp").innerText = data.current_weather.temperature;
+    document.getElementById("wind").innerText = data.current_weather.windspeed;
+
+    const sunsetISO = data.daily.sunset[0];
+    const sunsetTime = new Date(sunsetISO);
+    document.getElementById("sunset").innerText =
+        sunsetTime.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+    const moon = calculateMoon();
+    calculateScore(data.current_weather.windspeed, moon);
+    generateTargets(moon);
+}
+
+function calculateMoon() {
+
+    const now = new Date();
+    const lp = 2551443;
+    const new_moon = new Date('2001-01-24T13:46:00');
+
+    const phase = ((now - new_moon) / 1000) % lp;
+
+    const illumination =
+        Math.round((1 - Math.cos(2 * Math.PI * phase / lp)) / 2 * 100);
+
+    document.getElementById("moonillum").innerText = illumination;
+
+    return illumination;
+}
+
+function calculateScore(wind, moon) {
+
+    let score = 100;
+    score -= wind;
+    score -= moon * 0.3;
+    score -= 28;
+
+    if (score < 0) score = 0;
+    score = Math.round(score);
+
+    document.getElementById("score").innerText = score + " / 100";
+
+    if (score > 75)
+        document.getElementById("rating").innerHTML =
+        "<span class='green'>Excellent Imaging Night</span>";
+    else if (score > 40)
+        document.getElementById("rating").innerHTML =
+        "<span class='orange'>Moderate Conditions</span>";
+    else
+        document.getElementById("rating").innerHTML =
+        "<span class='red'>Poor Deep Sky Night</span>";
+}
+
+function generateTargets(moon) {
+
+    let output = "";
+
+    output += "<div class='section-title'>🌇 Early Evening (6:30–9:30 PM)</div>";
+    output += "Andromeda (M31)<br>M33<br>Pleiades (M45)<br>Double Cluster<br>IC 1396<br>NGC 7331<br><br>";
+
+    output += "<div class='section-title'>🌌 Prime Time (9:30 PM–1:30 AM)</div>";
+    output += "Orion (M42)<br>Rosette<br>Flame Nebula<br>Horsehead<br>North America<br>Veil<br>M51<br>M101<br>Markarian's Chain<br><br>";
+
+    output += "<div class='section-title'>🌠 Late Night (1:30–4:30 AM)</div>";
+    output += "M81 & M82<br>Leo Triplet<br>M13<br>Ring Nebula (M57)<br>Dumbbell (M27)<br>Whirlpool Galaxy<br>Pinwheel Galaxy<br><br>";
+
+    output += "<div class='section-title'>🌌 Large Emission Targets</div>";
+    output += "Lagoon (M8)<br>Eagle (M16)<br>Trifid (M20)<br>California Nebula<br>Heart Nebula<br>Soul Nebula<br><br>";
+
+    output += "<div class='section-title'>✨ Clusters</div>";
+    output += "M44 (Beehive)<br>M35<br>M36<br>M37<br>M38<br><br>";
+
+    if (moon > 60) {
+        output += "<div class='section-title'>🌙 Bright Moon Strategy</div>";
+        output += "Focus on emission nebula<br>";
+        output += "Use L-Ultimate filter<br>";
+        output += "Avoid faint galaxies<br><br>";
+    }
+
+    output += "<div class='section-title'>🪐 Planets</div>";
+    output += "Jupiter<br>Saturn<br>Mars (if visible)<br>";
+
+    document.getElementById("targets").innerHTML = output;
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
+
