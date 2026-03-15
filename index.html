@@ -1098,7 +1098,7 @@ style="transform-origin:100px 100px; transition:transform .6s ease;" />
       <h2>Equipment</h2>
       <div class="row">
         <div class="field" style="flex:1; min-width:240px">
-          <label>Telescope (Askar)</label>
+          <label>Telescope</label>
           <select id="scopeInput"></select>
         </div>
         <div class="field" style="flex:1; min-width:240px">
@@ -1342,7 +1342,7 @@ style="filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.8))
             <th>Peak</th>
             <th>Direction</th>
             <th>Fit</th>
-            <th>🌙 Sep</th>
+            <th>🌙 Moon Dist</th>
           </tr>
         </thead>
         <tbody id="targetsBody">
@@ -2390,7 +2390,7 @@ const cloudNow =
 let moonIcon;
 let moonSepClass;
 if(sepDeg >= 120){
-  moonIcon = '○';
+  moonIcon = '';
   moonSepClass = 'safe';
 }else if(sepDeg >= 60){
   moonIcon = '◐';
@@ -4413,7 +4413,7 @@ draw(vals);
 </script>
 
 
-<button id="removed_targetPopupClose">Close</button>
+
 </div>
 
 <script>
@@ -5254,7 +5254,7 @@ document.addEventListener("DOMContentLoaded", function(){
       const tds = row.querySelectorAll('td');
       const name = cleanText(tds[0]).split('′')[0].trim();
       const category = cleanText(tds[2]);
-      const peak = cleanText(tds[5]).replace(/^\s*[●•○◐🌙🌕☁️]+\s*/,'').trim();
+      const peak = cleanText(tds[5]).replace(/^\s*[●•◐🌙🌕☁️]+\s*/,'').trim();
       const moon = tds.length >= 9 ? cleanText(tds[8]) : "Visible now";
       cards.push(
         `<div class="bestTargetItem">
