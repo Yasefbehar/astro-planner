@@ -1002,6 +1002,162 @@ font-size:12px;
 
 </style>
 
+
+<style>
+#tempKpi.tempWind{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+}
+#tempKpi.tempWind .tw-col{
+  flex:1 1 0;
+}
+#tempKpi.tempWind .tw-col.right{
+  text-align:right;
+}
+#tempKpi.tempWind .tw-top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#tempKpi.tempWind .tw-icon{
+  width:28px;
+  height:28px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.05);
+  font-size:16px;
+  line-height:1;
+  box-shadow:0 0 10px rgba(255,255,255,.08);
+}
+#tempKpi.tempWind .tw-value{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.1;
+}
+#tempKpi.tempWind .tw-label{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+  line-height:1.2;
+}
+</style>
+
+
+<style>
+#bortleKpi.bortleCard{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#bortleKpi.bortleCard .bp-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+#bortleKpi.bortleCard .bp-icon{
+  width:32px;
+  height:32px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  line-height:1;
+  box-shadow:0 0 12px rgba(255,255,255,.06);
+  flex:0 0 32px;
+}
+#bortleKpi.bortleCard .bp-icon svg{
+  width:18px;
+  height:18px;
+  display:block;
+  opacity:.95;
+}
+#bortleKpi.bortleCard .bp-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+#bortleKpi.bortleCard .bp-main{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.1;
+}
+#bortleKpi.bortleCard .bp-badge{
+  padding:3px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  color:#dbe7ff;
+  border:1px solid rgba(120,170,255,.24);
+  background:rgba(120,170,255,.10);
+}
+#bortleKpi.bortleCard .bp-quality{
+  align-self:flex-start;
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.02em;
+  color:#ffe1c2;
+  border:1px solid rgba(255,170,90,.28);
+  background:rgba(255,170,90,.10);
+}
+#bortleKpi.bortleCard .bp-sub,
+#bortleKpi.bortleCard .bp-foot{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.3;
+}
+#bortleKpi.bortleCard .bp-scale{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#bortleKpi.bortleCard .bp-scale-label{
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted);
+  white-space:nowrap;
+}
+#bortleKpi.bortleCard .bp-scale-bar{
+  position:relative;
+  flex:1;
+  height:8px;
+  border-radius:999px;
+  overflow:hidden;
+  background:linear-gradient(90deg,#27d17f 0%, #9dd84b 18%, #f2cc3c 36%, #ff9d2f 54%, #ff6c2f 72%, #e24b4b 86%, #b63cff 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+#bortleKpi.bortleCard .bp-scale-dot{
+  position:absolute;
+  top:50%;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid rgba(8,14,30,.95);
+  box-shadow:0 0 0 2px rgba(255,255,255,.18);
+  transform:translate(-50%, -50%);
+}
+#bortleKpi.bortleCard .bp-scale-numbers{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px;
+  opacity:.95;
+}
+</style>
+
 </head>
 <body>
 <div id="redOverlay"></div>
@@ -1053,7 +1209,6 @@ font-size:12px;
       <div class="kpi" id="kpi">
         <div class="box">
           <div class="v" id="tempKpi">—</div>
-          <div class="k">Temperature</div>
         </div>
 <div class="box">
           <div class="v" id="bortleKpi">—</div>
@@ -1240,6 +1395,14 @@ style="transform-origin:100px 100px; transition:transform .6s ease;" />
           <tr><td colspan="4" class="muted">Loading…</td></tr>
         </tbody>
       </table>
+
+<div style="margin-top:10px;font-size:12px;opacity:.9">
+💨 <b>Wind indicator</b><br>
+🟢 &lt;10 mph good imaging &nbsp;&nbsp;
+🟡 10–18 mph moderate &nbsp;&nbsp;
+🔴 &gt;18 mph poor seeing
+</div>
+
     </section>
 
 
@@ -2874,22 +3037,60 @@ ${fmtTime(tPeak)}
   function updateBortleUI(){
     
     const est = estimateBortle(state.population);
+    const el = $("bortleKpi");
 
     // --- Precise Oceanside, NY override (safe insertion) ---
     if(
       state.lat > 40.55 && state.lat < 40.75 &&
       state.lon > -73.80 && state.lon < -73.45
     ){
-      $("bortleKpi").innerHTML = `Bortle 8 <span class="muted mini">(NYC metro)</span><div class="mini muted">Typical Long Island suburban sky</div>`;
+      el.classList.add("bortleCard");
+      el.innerHTML = `
+        <div class="bp-top">
+          <span class="bp-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.6l1.55 4.2 4.25 1.55-4.25 1.55L12 14.1 10.45 9.9 6.2 8.35l4.25-1.55L12 2.6z" fill="currentColor"/>
+              <path d="M18.2 13.8l.78 2.1 2.12.78-2.12.77-.78 2.11-.77-2.11-2.12-.77 2.12-.78.77-2.1z" fill="currentColor" opacity=".9"/>
+              <path d="M5.2 14.6l.96 2.55 2.55.96-2.55.95-.96 2.56-.95-2.56-2.56-.95 2.56-.96.95-2.55z" fill="currentColor" opacity=".78"/>
+            </svg>
+          </span>
+          <div class="bp-title">
+            <span class="bp-main">Bortle 8</span>
+            <span class="bp-badge">NYC metro</span>
+          </div>
+        </div>
+        <div class="bp-scale">
+          <span class="bp-scale-label">Sky glow</span>
+          <div class="bp-scale-bar">
+            <span class="bp-scale-dot" style="left:87.5%"></span>
+          </div>
+        </div>
+        <div class="bp-scale-numbers"><span>1</span><span>3</span><span>5</span><span>7</span><span>9</span></div>
+        <div class="bp-quality">Poor sky</div>
+        <div class="bp-sub">Typical Long Island suburban sky</div>
+        <div class="bp-foot">Strong sky glow • light pollution estimated</div>
+      `;
       return;
     }
 
     state.bortleClass = est.bortle;
     if(est.bortle == null){
-      $("bortleKpi").textContent = "—";
+      el.classList.remove("bortleCard");
+      el.textContent = "—";
       return;
     }
-    $("bortleKpi").innerHTML = `Bortle ${est.bortle} <span class="muted mini">${est.note}</span><div class="mini muted">SQM ~ ${est.sqm}</div>`;
+    el.classList.add("bortleCard");
+    el.innerHTML = `
+      <div class="bp-top">
+        <span class="bp-icon">🌌</span>
+        <div class="bp-title">
+          <span class="bp-main">Bortle ${est.bortle}</span>
+          <span class="bp-badge">${est.note}</span>
+        </div>
+      </div>
+      <div class="bp-sub">Sky brightness estimate for this location</div>
+      <div class="bp-foot">SQM ~ ${est.sqm}</div>
+    `;
   }
 
   
@@ -3097,8 +3298,25 @@ ${fmtTime(tPeak)}
       if(cw){
         const tempUnit = state.units==="metric" ? "°C" : "°F";
         const windUnit = state.units==="metric" ? "km/h" : "mph";
-        $("tempKpi").textContent = `${Math.round(cw.temperature)}${tempUnit} • ${Math.round(cw.windspeed)} ${windUnit}`;
+        $("tempKpi").classList.add("tempWind");
+        $("tempKpi").innerHTML = `
+          <div class="tw-col">
+            <div class="tw-top">
+              <span class="tw-icon" aria-hidden="true">🌡️</span>
+              <div class="tw-value">${Math.round(cw.temperature)}${tempUnit}</div>
+            </div>
+            <div class="tw-label">Temperature</div>
+          </div>
+          <div class="tw-col right">
+            <div class="tw-top" style="justify-content:flex-end;">
+              <span class="tw-icon" aria-hidden="true">💨</span>
+              <div class="tw-value">${Math.round(cw.windspeed)} ${windUnit}</div>
+            </div>
+            <div class="tw-label">Wind</div>
+          </div>
+        `;
       }else{
+        $("tempKpi").classList.remove("tempWind");
         $("tempKpi").textContent = "—";
       }
 
