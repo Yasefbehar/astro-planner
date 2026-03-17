@@ -1841,6 +1841,13 @@ body{
 .moonStat{ min-height: 1.6em; }
 </style>
 
+
+<style>
+#moonShort{display:none !important;}
+#moonDot{display:none !important;}
+.moonHeader .chip{display:none !important;}
+</style>
+
 </head>
 <body>
 <div id="redOverlay"></div>
@@ -2101,7 +2108,6 @@ style="filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.8))
     <section class="card moonCard">
       <div class="moonHeader">
         <h2 style="margin:0">Moon & Sun Status</h2>
-        <span class="chip"><span class="dot" id="moonDot"></span><b id="moonShort">—</b></span>
       </div>
       
       <div class="moonBody" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;">
