@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Astro Planner (Pro)</title>
   <style>
     :root{
@@ -1410,6 +1410,51 @@ font-size:12px;
 }
 </style>
 
+
+<style>
+/* === iPhone header/form stacking fix === */
+@media (max-width:700px){
+  header{
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:10px !important;
+  }
+
+  .brand{
+    width:100%;
+  }
+
+  .topActions{
+    width:100% !important;
+    justify-content:space-between !important;
+    align-items:stretch !important;
+  }
+
+  #locPill{
+    display:flex !important;
+    width:100% !important;
+    max-width:100% !important;
+    white-space:normal !important;
+    line-height:1.35 !important;
+    font-size:13px !important;
+  }
+
+  .row{
+    flex-direction:column !important;
+    align-items:stretch !important;
+  }
+
+  .field{
+    width:100% !important;
+    min-width:100% !important;
+    flex:1 1 100% !important;
+  }
+
+  #applyTime{
+    width:100% !important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="redOverlay"></div>
