@@ -21,7 +21,7 @@
       --pad: 18px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%; width:100%; max-width:100%; overflow-x:hidden;}
     body{
       margin:0;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
@@ -29,6 +29,10 @@
       color:var(--fg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x:hidden;
+      width:100%;
+      max-width:100%;
+      touch-action:pan-y;
     }
     .wrap{max-width:1080px; margin:0 auto; padding:24px 16px 48px;}
     header{
@@ -1262,6 +1266,117 @@ font-size:12px;
 #reducerHint{margin-bottom:6px !important;}
 </style>
 
+
+<style>
+/* === iPhone PERFECT VERSION (v14) === */
+@media (max-width:700px){
+  html, body{
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:hidden !important;
+    -webkit-text-size-adjust:100%;
+  }
+
+  .wrap{
+    width:100% !important;
+    max-width:100% !important;
+    padding:12px 10px 28px !important;
+    margin:0 auto !important;
+    overflow-x:hidden !important;
+  }
+
+  header{
+    align-items:flex-start !important;
+  }
+
+  .brand h1{
+    font-size:18px !important;
+  }
+
+  .topActions{
+    width:100% !important;
+    justify-content:flex-start !important;
+  }
+
+  .topSplit,
+  .remainingGrid,
+  .grid,
+  .kpi,
+  .equipGrid,
+  .moonBody{
+    grid-template-columns:1fr !important;
+  }
+
+  .row{
+    gap:8px !important;
+  }
+
+  .field{
+    min-width:0 !important;
+    width:100% !important;
+    flex:1 1 100% !important;
+  }
+
+  input, select, .btn{
+    min-height:44px;
+  }
+
+  .card{
+    padding:12px !important;
+    border-radius:14px !important;
+    overflow:hidden !important;
+  }
+
+  .card h2{
+    font-size:16px !important;
+    line-height:1.25 !important;
+    word-break:break-word;
+  }
+
+  table{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  #graphCard{
+    max-width:100% !important;
+    margin:12px 0 !important;
+  }
+
+  #astroGraph{
+    width:100% !important;
+    max-width:100% !important;
+    height:220px !important;
+  }
+
+  .moonCard .moonMedia,
+  .moonCard .moonPhoto,
+  .moonPhoto{
+    width:120px !important;
+    height:120px !important;
+  }
+
+  .moon-guide-wrap{
+    grid-template-columns:1fr !important;
+  }
+
+  .bestTargetsList{
+    grid-template-columns:1fr !important;
+  }
+
+  #actionCallout{
+    white-space:normal !important;
+    align-items:flex-start !important;
+  }
+
+  svg, canvas, img{
+    max-width:100% !important;
+    height:auto;
+  }
+}
+</style>
 </head>
 <body>
 <div id="redOverlay"></div>
