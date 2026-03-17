@@ -371,6 +371,21 @@ input[type="time"], input[type="date"]{
   background: rgba(255,255,255,0.04);
 }
 
+
+/* Layout fix: move Comet Watch + ISS cards directly below Visible Planets without shifting other sections */
+.comet-watch-container,
+.comet-container,
+.comet-card,
+#cometWatchContainer,
+#cometContainer,
+.iss-container,
+.iss-card,
+.iss-transit-container,
+#issContainer,
+#issTransitContainer {
+  margin-top: 12px !important;
+}
+
 </style>
 
 <style>
@@ -1158,6 +1173,89 @@ font-size:12px;
 }
 </style>
 
+
+<style>
+/* Trial layout: keep original page width, stack left cards only */
+.topSplit{
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap:14px;
+  align-items:start;
+  margin-bottom:14px;
+}
+.topSplit .leftStack,
+.topSplit .rightStack{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.remainingGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+}
+@media (max-width:980px){
+  .topSplit,
+  .remainingGrid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+
+
+<style>
+/* Balanced width graph (not too wide) */
+#graphCard{
+  max-width:720px;
+  margin:14px auto;
+}
+#astroGraph{
+  width:100% !important;
+  max-width:720px !important;
+  height:240px !important;
+}
+</style>
+
+
+<style>
+/* Force lower section into left/right stacks without breaking top layout */
+.remainingGrid{
+  display:grid !important;
+  grid-template-columns: 1.1fr .9fr !important;
+  gap:14px !important;
+  align-items:start !important;
+}
+#targetsTimingSection{ grid-column:1; }
+#visiblePlanetsSection{ grid-column:1; }
+#cometWatchSection{ grid-column:2; }
+#issTransitSection{ grid-column:2; }
+#warningsSection{ grid-column:1 / -1; }
+@media (max-width:980px){
+  .remainingGrid{
+    grid-template-columns:1fr !important;
+  }
+  #targetsTimingSection,
+  #visiblePlanetsSection,
+  #cometWatchSection,
+  #issTransitSection,
+  #warningsSection{
+    grid-column:auto !important;
+  }
+}
+</style>
+
+
+<style>
+#visiblePlanetsSection,
+#cometWatchSection,
+#issTransitSection{
+  margin-top: 0 !important;
+}
+#cometWatchSection, #issTransitSection{
+  width: 100%;
+}
+</style>
+
 </head>
 <body>
 <div id="redOverlay"></div>
@@ -1175,8 +1273,8 @@ font-size:12px;
     </div>
   </header>
 
-  <div class="grid">
-    
+  <div class="topSplit">
+  <div class="leftStack">
 
     <section class="card">
       <h2>Location & Time</h2>
@@ -1291,123 +1389,8 @@ style="transform-origin:100px 100px; transition:transform .6s ease;" />
       </div>
     </section>
 
-    
 
-
-    
-    
-
-
-
-    <section class="card moonCard">
-      <div class="moonHeader">
-        <h2 style="margin:0">Moon & Sun Status</h2>
-        <span class="chip"><span class="dot" id="moonDot"></span><b id="moonShort">—</b></span>
-      </div>
-      
-      <div class="moonBody" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;">
-        
-        <!-- LEFT: MOON -->
-        <div style="text-align:center;">
-          <img id="moonReal" class="moonPhoto" style="margin:0 auto 12px auto; display:block;" src="">
-          <div class="moonPhaseName" id="moonPhase">—</div>
-          <div class="moonStat">Illumination: <b id="moonIllum">—</b></div>
-          <div class="moonStat">Altitude: <b id="moonAlt">—</b></div>
-          <div class="moonStat">Azimuth: <b id="moonDir">—</b></div>
-          <div class="moonStat">Distance: <b id="moonDist">—</b></div>
-          <div class="moonStat">Angular size: <b id="moonSize">—</b></div>
-<div id="tonightLunar" class="callout" style="margin-top:12px;">
-            <b>🌑 Tonight – Total Lunar Eclipse (New York Time)</b><br>
-            March 2–3, 2026<br>
-            Penumbral begins: 3:44 AM (Mar 3)<br>
-            Partial begins: 4:50 AM<br>
-            Totality begins: 6:04 AM<br>
-            Maximum: 6:33 AM<br>
-            <span class="muted">Moon sets ~6:28 AM (totality near horizon)</span>
-          </div>
-
-        </div>
-
-        <!-- RIGHT: SUN -->
-        <div style="text-align:center;">
-          
-          <img id="sunPhoto" class="moonPhoto" alt="Sun" style="margin:0 auto 12px auto;"/>
-          <div class="moonStat">Sunrise: <b id="sunRise">—</b></div>
-          <div class="moonStat">Sunset: <b id="sunSet">—</b></div>
-          <div class="callout" style="margin-top:14px;">
-            <b>🌞 Upcoming Solar Eclipse — New York City Time</b><br>
-            August 12, 2026 — Partial (~10%)<br>
-            First contact: ~1:07 PM EDT<br>
-            Maximum: ~1:54 PM EDT<br>
-            Ends: ~2:39 PM EDT
-          </div>
-
-          
-
-      </div>
-
-    </section>
-
-<section class="card">
-      <h2>Hourly Weather
-<div style="display:flex;gap:18px;justify-content:center;align-items:center;margin:10px 0 12px 0;flex-wrap:wrap">
-
-<!-- Clear sky -->
-<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
-<circle cx="50" cy="50" r="18" fill="white"/>
-</svg>
-
-<!-- Cloud -->
-<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
-<ellipse cx="45" cy="55" rx="22" ry="12" fill="white"/>
-<circle cx="35" cy="50" r="10" fill="white"/>
-<circle cx="55" cy="50" r="10" fill="white"/>
-</svg>
-
-<!-- Rain -->
-<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
-<ellipse cx="45" cy="45" rx="22" ry="12" fill="white"/>
-<circle cx="35" cy="40" r="10" fill="white"/>
-<circle cx="55" cy="40" r="10" fill="white"/>
-<line x1="35" y1="60" x2="35" y2="75" stroke="white" stroke-width="4"/>
-<line x1="50" y1="60" x2="50" y2="75" stroke="white" stroke-width="4"/>
-</svg>
-
-<!-- Wind -->
-<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
-<path d="M10 40 Q40 25 70 40" stroke="white" stroke-width="5" fill="none"/>
-<path d="M20 55 Q50 40 85 55" stroke="white" stroke-width="5" fill="none"/>
-</svg>
-
-</div>
-</h2>
-      <div class="hint">Next 12 hours (local time)</div>
-      <table class="planet-table">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Temp</th>
-            <th>Cloud %</th>
-            <th>Condition</th>
-          </tr>
-        </thead>
-        <tbody id="hourlyBody">
-          <tr><td colspan="4" class="muted">Loading…</td></tr>
-        </tbody>
-      </table>
-
-<div style="margin-top:10px;font-size:12px;opacity:.9">
-💨 <b>Wind indicator</b><br>
-🟢 &lt;10 mph good imaging &nbsp;&nbsp;
-🟡 10–18 mph moderate &nbsp;&nbsp;
-🔴 &gt;18 mph poor seeing
-</div>
-
-    </section>
-
-
-
-<section class="card">
+<section class="card" id="targetsTimingSection">
       <h2>Tonight: Best Targets & Timing
 <div style="display:flex;gap:16px;justify-content:center;align-items:center;margin:10px 0 10px 0;flex-wrap:wrap">
 
@@ -1524,8 +1507,119 @@ style="filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.8))
         <span class="chip filterChip" data-cat="Galaxy">Galaxy</span>
         <span class="chip filterChip" data-cat="ALL">All</span>
       </div>
+    </section>
+
+  </div>
+  <div class="rightStack">
+
+    <section class="card moonCard">
+      <div class="moonHeader">
+        <h2 style="margin:0">Moon & Sun Status</h2>
+        <span class="chip"><span class="dot" id="moonDot"></span><b id="moonShort">—</b></span>
+      </div>
+      
+      <div class="moonBody" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;">
+        
+        <!-- LEFT: MOON -->
+        <div style="text-align:center;">
+          <img id="moonReal" class="moonPhoto" style="margin:0 auto 12px auto; display:block;" src="">
+          <div class="moonPhaseName" id="moonPhase">—</div>
+          <div class="moonStat">Illumination: <b id="moonIllum">—</b></div>
+          <div class="moonStat">Altitude: <b id="moonAlt">—</b></div>
+          <div class="moonStat">Azimuth: <b id="moonDir">—</b></div>
+          <div class="moonStat">Distance: <b id="moonDist">—</b></div>
+          <div class="moonStat">Angular size: <b id="moonSize">—</b></div>
+<div id="tonightLunar" class="callout" style="margin-top:12px;">
+            <b>🌑 Tonight – Total Lunar Eclipse (New York Time)</b><br>
+            March 2–3, 2026<br>
+            Penumbral begins: 3:44 AM (Mar 3)<br>
+            Partial begins: 4:50 AM<br>
+            Totality begins: 6:04 AM<br>
+            Maximum: 6:33 AM<br>
+            <span class="muted">Moon sets ~6:28 AM (totality near horizon)</span>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: SUN -->
+        <div style="text-align:center;">
+          
+          <img id="sunPhoto" class="moonPhoto" alt="Sun" style="margin:0 auto 12px auto;"/>
+          <div class="moonStat">Sunrise: <b id="sunRise">—</b></div>
+          <div class="moonStat">Sunset: <b id="sunSet">—</b></div>
+          <div class="callout" style="margin-top:14px;">
+            <b>🌞 Upcoming Solar Eclipse — New York City Time</b><br>
+            August 12, 2026 — Partial (~10%)<br>
+            First contact: ~1:07 PM EDT<br>
+            Maximum: ~1:54 PM EDT<br>
+            Ends: ~2:39 PM EDT
+          </div>
+
+          
+
+      </div>
+
+    </section>
 
 <section class="card">
+      <h2>Hourly Weather
+<div style="display:flex;gap:18px;justify-content:center;align-items:center;margin:10px 0 12px 0;flex-wrap:wrap">
+
+<!-- Clear sky -->
+<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
+<circle cx="50" cy="50" r="18" fill="white"/>
+</svg>
+
+<!-- Cloud -->
+<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
+<ellipse cx="45" cy="55" rx="22" ry="12" fill="white"/>
+<circle cx="35" cy="50" r="10" fill="white"/>
+<circle cx="55" cy="50" r="10" fill="white"/>
+</svg>
+
+<!-- Rain -->
+<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
+<ellipse cx="45" cy="45" rx="22" ry="12" fill="white"/>
+<circle cx="35" cy="40" r="10" fill="white"/>
+<circle cx="55" cy="40" r="10" fill="white"/>
+<line x1="35" y1="60" x2="35" y2="75" stroke="white" stroke-width="4"/>
+<line x1="50" y1="60" x2="50" y2="75" stroke="white" stroke-width="4"/>
+</svg>
+
+<!-- Wind -->
+<svg width="48" height="48" viewBox="0 0 100 100" style="filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,.7));">
+<path d="M10 40 Q40 25 70 40" stroke="white" stroke-width="5" fill="none"/>
+<path d="M20 55 Q50 40 85 55" stroke="white" stroke-width="5" fill="none"/>
+</svg>
+
+</div>
+</h2>
+      <div class="hint">Next 12 hours (local time)</div>
+      <table class="planet-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Temp</th>
+            <th>Cloud %</th>
+            <th>Condition</th>
+          </tr>
+        </thead>
+        <tbody id="hourlyBody">
+          <tr><td colspan="4" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+
+<div style="margin-top:10px;font-size:12px;opacity:.9">
+💨 <b>Wind indicator</b><br>
+🟢 &lt;10 mph good imaging &nbsp;&nbsp;
+🟡 10–18 mph moderate &nbsp;&nbsp;
+🔴 &gt;18 mph poor seeing
+</div>
+
+    </section>
+
+
+<section class="card" id="visiblePlanetsSection">
       <h2>Tonight: Visible Planets (≥30°)</h2>
       <div class="hint">Planets that rise above 30° during astronomical darkness.</div>
 
@@ -1542,24 +1636,10 @@ style="filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.8))
           <tr><td colspan="4" class="muted">Calculating…</td></tr>
         </tbody>
       </table>
-    </section>
-
-
-
-      
-      
-
-
-<div class="callout" style="margin-top:14px; font-size:12px; line-height:1.5;">
-        
-
-
-      
     
+</section>
 
-
-
-<section class="card">
+<section class="card" id="cometWatchSection">
       <h2>Tonight: Comet Watch</h2>
       <div class="hint">Upcoming comets (Naked‑Eye / Binocular / Telescope)</div>
 
@@ -1578,16 +1658,7 @@ style="filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.8))
       </table>
     </section>
 
-
-    
-
-
-
-
-
-
-
-<section class="card">
+<section class="card" id="issTransitSection">
 <h2 style="display:flex;align-items:center;gap:12px;">
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/International_Space_Station.svg"
 style="width:80px;height:80px;filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.7));">
@@ -1615,11 +1686,7 @@ Open ISS Transit Finder
 
 </section>
 
-
-
-
-
-<section class="card">
+<section class="card" id="warningsSection">
       <h2>Warnings</h2>
 <div class="warningsMoonWrap">
       <div class="callout warn">
@@ -1632,13 +1699,10 @@ Open ISS Transit Finder
         <b>Note:</b> Cloud data is sourced from Open‑Meteo. “Seeing / transparency” Fine metrics such as seeing and transparency are not included in this first iteration by design.
       </div>
     </div></section>
-
-
-    
-
-
-  </div>
 </div>
+</div>
+
+
 <div style="text-align:center;margin-top:4px;font-size:12px;opacity:.9">
 
 </div>
@@ -4631,6 +4695,8 @@ draw(vals);
 </script>
 
 
+
+</div>
 
 </div>
 
