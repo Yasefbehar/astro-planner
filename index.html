@@ -1848,6 +1848,103 @@ body{
 .moonHeader .chip{display:none !important;}
 </style>
 
+
+<style id="mobile-scroll-lite-fix">
+/* v11 Lite Mobile scroll/performance fix */
+@media (max-width: 900px){
+  html, body{
+    background-image:none !important;
+    background-attachment:scroll !important;
+    scroll-behavior:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  *{
+    animation:none !important;
+    transition:none !important;
+    filter:none !important;
+    backdrop-filter:none !important;
+    text-shadow:none !important;
+  }
+
+  #redOverlay,
+  #targetPopup,
+  #graphCard{
+    display:none !important;
+  }
+
+  .card,
+  .equipStat,
+  .bestTargetItem,
+  .callout,
+  .chip,
+  .pill,
+  .btn,
+  input,
+  select,
+  table,
+  .moonPhoto{
+    box-shadow:none !important;
+  }
+
+  .card,
+  .equipStat,
+  .bestTargetItem,
+  .callout,
+  .chip,
+  .pill,
+  .btn,
+  input,
+  select,
+  .moonPhoto{
+    border-radius:12px !important;
+  }
+
+  svg{
+    filter:none !important;
+  }
+
+  .moonPhoto{
+    border-radius:50% !important;
+  }
+
+  .filterChip:hover,
+  #targetsBody tr:hover,
+  .planet-table tr:hover td{
+    transform:none !important;
+    box-shadow:none !important;
+    background:inherit !important;
+  }
+
+  table{
+    -webkit-overflow-scrolling:touch !important;
+    contain:paint !important;
+  }
+
+  canvas{
+    display:none !important;
+  }
+}
+</style>
+<script id="mobile-scroll-lite-script">
+(function(){
+  if (window.innerWidth > 900) return;
+
+  // Reduce iPhone repaint pressure while scrolling.
+  document.documentElement.style.webkitOverflowScrolling = 'touch';
+  document.body.style.webkitOverflowScrolling = 'touch';
+
+  // Hide heavy graph card if present.
+  var graph = document.getElementById('graphCard');
+  if (graph) graph.style.display = 'none';
+
+  // Remove residual glow/drop-shadow filters inline on mobile.
+  document.querySelectorAll('[style*="drop-shadow"]').forEach(function(el){
+    el.style.filter = 'none';
+  });
+})();
+</script>
+
 </head>
 <body>
 <div id="redOverlay"></div>
