@@ -1789,6 +1789,58 @@ html, body {
   }
 }
 </style>
+
+<style>
+/* === v8 iPhone scroll fix === */
+html{
+  height:auto !important;
+  min-height:100% !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+}
+body{
+  height:auto !important;
+  min-height:100% !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+  position:static !important;
+  touch-action:pan-y pinch-zoom;
+}
+.wrap{
+  overflow:visible !important;
+}
+@media (max-width: 900px){
+  body{
+    overscroll-behavior-y:auto;
+  }
+  .card,
+  section,
+  .topSplit,
+  .remainingGrid,
+  .leftStack,
+  .rightStack{
+    overflow:visible !important;
+  }
+  table{
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+</style>
+
+<style>
+/* v9 moon jitter fix */
+#moonPhase, #moonIllum, #moonShort, #moonAlt, #moonDir, #moonDist, #moonSize{
+  min-height: 1.4em;
+  display: inline-block;
+}
+.moonBody{ align-items:start !important; }
+.moonStat{ min-height: 1.6em; }
+</style>
+
 </head>
 <body>
 <div id="redOverlay"></div>
@@ -4934,7 +4986,7 @@ function colorPlanetStatus(){
     }
   });
 }
-setInterval(colorPlanetStatus,500);
+setTimeout(colorPlanetStatus, 300);
 
 // === Moon Indicator Fix (color + percent text) ===
 (function(){
@@ -4962,8 +5014,11 @@ setInterval(colorPlanetStatus,500);
     }
   }
 
-  // run repeatedly since moon values update dynamically
-  setInterval(updateMoonIndicator, 1000);
+  // run once and on user actions only to avoid jitter
+  document.addEventListener('DOMContentLoaded', updateMoonIndicator);
+  document.getElementById('applyTime')?.addEventListener('click', function(){ setTimeout(updateMoonIndicator, 60); });
+  document.getElementById('dateInput')?.addEventListener('change', updateMoonIndicator);
+  document.getElementById('timeInput')?.addEventListener('change', updateMoonIndicator);
 })();
 
 
@@ -5695,7 +5750,7 @@ document.getElementById('reducerSelect')?.addEventListener('change', ()=>setTime
     const t = document.getElementById('timeInput');
     if(d) d.addEventListener('change', updateMoonPanelFixed);
     if(t) t.addEventListener('change', updateMoonPanelFixed);
-    setInterval(updateMoonPanelFixed, 1200);
+    /* disabled noisy moon auto-refresh */
   });
 })();
 </script>
@@ -5870,12 +5925,7 @@ document.getElementById('reducerSelect')?.addEventListener('change', ()=>setTime
     const phaseEl = document.getElementById('moonPhase');
     const illumEl = document.getElementById('moonIllum');
     const img = document.getElementById('moonReal');
-    const obs = new MutationObserver(function(){ if(!moonPatchLock) applyAuthoritativeMoon(); });
-    [phaseEl, illumEl, img].filter(Boolean).forEach(function(el){
-      obs.observe(el, { childList:true, characterData:true, subtree:true, attributes:true, attributeFilter:['src','style'] });
-    });
-
-    setInterval(applyAuthoritativeMoon, 900);
+    /* disabled MutationObserver + interval to prevent moon panel jitter on iPhone */
   });
 })();
 </script>
