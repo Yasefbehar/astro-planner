@@ -1842,13 +1842,6 @@ body{
 </style>
 
 
-<style>
-#moonShort{display:none !important;}
-#moonDot{display:none !important;}
-.moonHeader .chip{display:none !important;}
-</style>
-
-
 <style id="mobile-scroll-lite-fix">
 /* v11 Lite Mobile scroll/performance fix */
 @media (max-width: 900px){
@@ -1946,9 +1939,194 @@ body{
 </script>
 
 
-<style id="remove-moon-chip">
+<style id="v13-final-clean-build">
+/* ===== Astro Planner v13 FINAL CLEAN BUILD ===== */
+
+/* Base stability */
+html, body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+}
+
+/* Keep mobile scrolling smooth */
+body{
+  overscroll-behavior-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Remove the tiny floating moon chip completely */
 #moonShort, #moonDot, .moonHeader .chip{
-display:none !important;
+  display:none !important;
+}
+
+/* Clean moon section spacing */
+.moonHeader{
+  display:block !important;
+  margin-bottom:14px !important;
+}
+
+.moonCard{
+  margin-top:14px !important;
+}
+
+.moonBody{
+  margin-top:6px !important;
+}
+
+/* Prevent overlap from nearby controls/cards */
+.filterChip,
+.card,
+.moonCard,
+#visiblePlanetsSection,
+#cometWatchSection,
+#issTransitSection{
+  position:relative;
+  z-index:1;
+}
+
+/* Mobile layout polish */
+@media (max-width: 900px){
+  html{
+    font-size:18px !important;
+  }
+
+  body{
+    font-size:16px !important;
+    background-attachment:scroll !important;
+  }
+
+  /* single-column mobile layout */
+  .topSplit,
+  .remainingGrid,
+  .grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  header{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:10px !important;
+    margin-bottom:16px !important;
+  }
+
+  .brand{
+    width:100% !important;
+  }
+
+  .topActions{
+    width:100% !important;
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:10px !important;
+    align-items:stretch !important;
+  }
+
+  #locPill{
+    grid-column:1 / -1 !important;
+    width:100% !important;
+    white-space:normal !important;
+    line-height:1.35 !important;
+    justify-content:flex-start !important;
+  }
+
+  .btn{
+    width:100% !important;
+    min-height:48px !important;
+  }
+
+  .row{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:12px !important;
+  }
+
+  .field{
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  input, select{
+    width:100% !important;
+  }
+
+  /* Make cards lighter for smoother scroll */
+  .card,
+  .equipStat,
+  .bestTargetItem,
+  .callout,
+  .chip,
+  .pill,
+  .btn,
+  input,
+  select{
+    box-shadow:none !important;
+    backdrop-filter:none !important;
+  }
+
+  *{
+    text-shadow:none !important;
+  }
+
+  /* Keep moon/sun neat on phone */
+  .moonBody{
+    grid-template-columns:1fr !important;
+    gap:20px !important;
+  }
+
+  .moonPhoto,
+  .moonMedia{
+    width:132px !important;
+    height:132px !important;
+  }
+
+  /* Tables should not break vertical scrolling */
+  table{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  thead, tbody{
+    width:100%;
+  }
+
+  /* Hide the heavy graph on phone for smoothness */
+  #graphCard{
+    display:none !important;
+  }
+
+  canvas{
+    display:none !important;
+  }
+
+  /* Remove hover transforms on phone */
+  .filterChip:hover,
+  #targetsBody tr:hover,
+  .planet-table tr:hover td{
+    transform:none !important;
+    box-shadow:none !important;
+  }
+}
+
+@media (max-width: 430px){
+  .brand h1{
+    font-size:22px !important;
+  }
+
+  .card h2{
+    font-size:20px !important;
+  }
+
+  .moonPhaseName{
+    font-size:20px !important;
+  }
 }
 </style>
 
@@ -6421,6 +6599,19 @@ document.addEventListener("DOMContentLoaded", function(){
     setTimeout(initCategoryFix, 2500);
   });
 })();
+</script>
+
+
+<script id="v13-moon-chip-cleanup">
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("#moonShort, #moonDot, .moonHeader .chip").forEach(function(el){
+    if (el && el.parentNode) {
+      if (el.classList && el.classList.contains("chip")) {
+        el.remove();
+      }
+    }
+  });
+});
 </script>
 
 </body>
