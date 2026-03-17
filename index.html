@@ -1256,6 +1256,12 @@ font-size:12px;
 }
 </style>
 
+
+<style>
+#fovBox{width:100% !important; display:block !important;}
+#reducerHint{margin-bottom:6px !important;}
+</style>
+
 </head>
 <body>
 <div id="redOverlay"></div>
@@ -1368,10 +1374,11 @@ style="transform-origin:100px 100px; transition:transform .6s ease;" />
           </select>
           <div class="hint" id="reducerHint">Reducer options update automatically when a telescope is selected.</div>
         </div>
-        <div class="field" style="min-width:240px; flex:1">
-          <label>FOV (approximate)</label>
-          <div class="callout" id="fovBox" style="margin:0">—</div>
-        </div>
+      </div>
+
+      <div class="field" style="width:100%; margin-top:4px">
+        <label>FOV (approximate)</label>
+        <div class="callout" id="fovBox" style="margin:0; width:100%">—</div>
       </div>
 
       <div id="equipmentStats" class="equipGrid" aria-live="polite">
@@ -1686,6 +1693,9 @@ Open ISS Transit Finder
 
 </section>
 
+  </div>
+</div>
+
 <section class="card" id="warningsSection">
       <h2>Warnings</h2>
 <div class="warningsMoonWrap">
@@ -1699,10 +1709,6 @@ Open ISS Transit Finder
         <b>Note:</b> Cloud data is sourced from Open‑Meteo. “Seeing / transparency” Fine metrics such as seeing and transparency are not included in this first iteration by design.
       </div>
     </div></section>
-</div>
-</div>
-
-
 <div style="text-align:center;margin-top:4px;font-size:12px;opacity:.9">
 
 </div>
@@ -2394,7 +2400,7 @@ Open ISS Transit Finder
       if(fam==="PHQ" || fam==="FRA"){
         hint.textContent = "Petzval/Flatfield tasarım: çoğu durumda 1× ile hazır. Reducer varsa listede görünür.";
       }else{
-        hint.textContent = "EDT tasarım: 1× flattener / (varsa) reducer seçenekleri listelenir.";
+        hint.textContent = "EDT design: native 1× flattener; optional reducers listed when available.";
       }
     }
   }
