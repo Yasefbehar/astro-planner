@@ -1229,7 +1229,7 @@ font-size:12px;
 #visiblePlanetsSection{ grid-column:1; }
 #cometWatchSection{ grid-column:2; }
 #issTransitSection{ grid-column:2; }
-#warningsSection{ grid-column:1 / -1; }
+
 @media (max-width:980px){
   .remainingGrid{
     grid-template-columns:1fr !important;
@@ -1238,9 +1238,7 @@ font-size:12px;
   #visiblePlanetsSection,
   #cometWatchSection,
   #issTransitSection,
-  #warningsSection{
-    grid-column:auto !important;
-  }
+  
 }
 </style>
 
@@ -1696,19 +1694,7 @@ Open ISS Transit Finder
   </div>
 </div>
 
-<section class="card" id="warningsSection">
-      <h2>Warnings</h2>
-<div class="warningsMoonWrap">
-      <div class="callout warn">
-        <b>Atmospheric distortion rule:</b> The portion of a target below 30° altitude typically contains more aerosols, light pollution, and atmospheric turbulence (seeing).
-        Therefore, the planner treats below 30° as low ROI for imaging.
-      </div>
-      <div class="callout warn" id="moonWarning" style="margin-top:10px; display:none"></div>
 
-      <div class="callout" style="margin-top:10px">
-        <b>Note:</b> Cloud data is sourced from Open‑Meteo. “Seeing / transparency” Fine metrics such as seeing and transparency are not included in this first iteration by design.
-      </div>
-    </div></section>
 <div style="text-align:center;margin-top:4px;font-size:12px;opacity:.9">
 
 </div>
