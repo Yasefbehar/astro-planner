@@ -1326,6 +1326,90 @@ font-size:12px;
   .moonPhoto, .moonMedia{width:124px !important; height:124px !important;}
 }
 </style>
+
+<style>
+/* === Astro Planner v3 iPhone Pro Layout === */
+@media (max-width: 700px){
+  body{overflow-x:hidden;}
+  .wrap{max-width:100%; padding:16px 12px 34px !important;}
+  header{flex-direction:column; align-items:stretch !important; gap:12px !important;}
+  .brand{justify-content:center; text-align:center;}
+  .brand h1{width:100%; font-size:24px !important;}
+  .brand .sub{width:100%; font-size:14px !important;}
+  .topActions{display:grid !important; grid-template-columns:1fr 1fr; gap:10px !important; width:100%;}
+  .topActions .pill{grid-column:1 / -1; justify-content:center; min-height:46px; font-size:14px !important;}
+  .topActions .btn{width:100%; min-height:48px;}
+
+  .topSplit,
+  .remainingGrid,
+  .grid,
+  .moonBody,
+  .warningsMoonWrap,
+  .bestTargetsList,
+  .equipGrid,
+  .row{
+    grid-template-columns:1fr !important;
+  }
+
+  .leftStack, .rightStack{gap:12px !important;}
+
+  .row{display:grid !important; gap:10px !important;}
+  .field{min-width:100% !important; width:100% !important;}
+  .field[style]{min-width:100% !important; width:100% !important; flex:1 1 100% !important;}
+
+  .card{padding:16px 14px !important; border-radius:18px !important;}
+  .card h2{font-size:20px !important; line-height:1.2;}
+
+  .kpi{grid-template-columns:1fr !important; gap:10px !important;}
+  .kpi .box{padding:14px !important;}
+  .kpi .v{font-size:22px !important;}
+
+  .equipGrid{display:grid !important; grid-template-columns:1fr 1fr !important; gap:10px !important;}
+  .equipStat{min-height:76px;}
+  .equipValue{font-size:16px !important;}
+
+  #graphCard{max-width:100% !important; margin:12px 0 !important;}
+  #astroGraph{height:220px !important; width:100% !important; max-width:100% !important;}
+
+  .moonCard{max-width:100% !important;}
+  .moonBody{display:grid !important; grid-template-columns:1fr 1fr !important; gap:14px !important;}
+  .moonPhoto, .moonMedia{width:118px !important; height:118px !important;}
+  .moonPhaseName{font-size:19px !important;}
+  .moonStat{font-size:13px !important; line-height:1.55 !important;}
+
+  table{display:block; width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; border-radius:12px;}
+  thead, tbody, tr{white-space:nowrap;}
+  th, td{font-size:13px !important; padding:8px 7px !important;}
+
+  #targetsBody td:first-child,
+  #planetBody td:first-child,
+  #cometBody td:first-child,
+  #hourlyBody td:first-child{font-weight:700;}
+
+  #targetCategoryGuide{font-size:14px !important; line-height:1.35;}
+  .filterChip{justify-content:center; text-align:center; min-height:42px; width:100%;}
+  .row .filterChip{display:flex; width:100%;}
+
+  #actionCallout{white-space:normal !important; align-items:flex-start !important; line-height:1.45;}
+  .callout{border-radius:14px !important;}
+
+  .btn, input, select{min-height:48px;}
+  input, select{font-size:16px !important;}
+}
+
+@media (max-width: 430px){
+  .wrap{padding:14px 10px 28px !important;}
+  .card{padding:14px 12px !important;}
+  .topActions{grid-template-columns:1fr !important;}
+  .topActions .pill{grid-column:auto;}
+  .equipGrid{grid-template-columns:1fr !important;}
+  .moonBody{grid-template-columns:1fr !important;}
+  .moonPhoto, .moonMedia{width:132px !important; height:132px !important;}
+  .card h2{font-size:19px !important;}
+  th, td{font-size:12.5px !important;}
+}
+</style>
+
 </head>
 <body>
 <div id="redOverlay"></div>
